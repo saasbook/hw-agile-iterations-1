@@ -52,7 +52,13 @@ class LoginController < ApplicationController
 
     def create_github_user(user_info)
         # Unfortunately, Github doesn't provide first_name, last_name as separate entries.
-        first_name, last_name = user_info['info']['name'].strip.split(/\s+/, 2)
+        name = user_info['info']['name']
+        if name.nil?
+            first_name = 'Anon'
+            last_name = 'User'
+        else
+            first_name, last_name = user_info['info']['name'].strip.split(/\s+/, 2)
+        end
         User.create(
             uid:        user_info['uid'],
             provider:   User.providers[:github],
