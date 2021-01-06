@@ -54,6 +54,11 @@ You can also open a `rails console` and examine individual keys
 ### Heroku
 Now we would like to setup the app on Heroku ensuring that our credentials are available there.
 1. Install Heroku CLI client on your machine [using the following instructions](https://devcenter.heroku.com/articles/heroku-cli).
+
+The command you should use is:
+```shell script
+curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+```
 2. Make sure your installation works by running the following command `heroku -v` to print the version of Heroku CLI
    available on your terminal.
 3. Create a new Heroku app using `heroku create`. You may provide your desired appname using `heroku create fancyapp`.
@@ -86,6 +91,7 @@ Now we would like to setup the app on Heroku ensuring that our credentials are a
 7. Next, we need to migrate our database. Run the following command to execute the typical Rails migration task on Heroku:
    ```shell script
    heroku run rails db:migrate
+   heroku run rails db:seed
    ```   
    In this project, you will notice in `config/database.yml` that we are using `SQLite3` for test and development
    and `PostgreSQL` for production.
@@ -147,6 +153,9 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
    ```shell script
    travis login --pro --auto
    ```
+
+   If you get a `Bad Credentials` error, visit [Common Travis Issues](./travis.md).
+
    Afterwards, since we need to give Travis CI a means to clone our private repo to run CI builds,
    we need to generate an ssh-key for Travis to use. First identify your repo's org and name using:
    ```shell script
@@ -164,12 +173,19 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
    Annoyingly, uploading your own SSH key via Travis CLI will fail if your SSH key does not have a passphrase (as per [another GitHub issue](https://github.com/travis-ci/travis.rb/issues/267)), so you will have to manually [generate your own SSH key](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) and either ensure it has a passphrase and [upload it via the CLI](https://github.com/travis-ci/travis.rb#sshkey), or [upload it manually](https://docs.travis-ci.com/user/private-dependencies/#using-an-existing-key).
 4. Now push your `config/master.key` to Travis CI using:
    ```shell script
-   travis encrypt --pro RAILS_MASTER_KEY=`cat config/master.key` --add env
+   travis encrypt --pro RAILS_MASTER_KEY="$(< config/master.key)" --add env
    ```
+
+   If you see a message like `Detected repository as cs169/hw-agile-iterations-fa20-0909, is this correct?`, type `y`.
+
+   After that, if you see a message like `Overwrite the config file /home/codio/workspace/hw-agile-iterations-fa20-0909/.travis.yml with the content below?`, type `y`.
+
 5. Then run the following command to ensure your `.travis.yml` file is valid.
    ```shell script
    travis lint
    ```
+
+6. Add, commit and push to GitHub.
 
 ### Codecov
 1. You'll need to claim your [GitHub Student Developer Pack](https://education.github.com/pack) before beginning.
@@ -178,8 +194,7 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
 
 2. You may be required to add permissions to Codecov on GitHub. Visit your [GitHub settings page](https://github.com/settings) and select `Applications`. Look for Codecov and grant extra permission if needed.
 
-3. Visit your repo on Codecov via `codecov.io/gh/[myorg]/[myrepo]/settings`.
-   Identify the `Repository Upload Token` and copy the `CODECOV_TOKEN="your-codecov-upload-token"`.
+   Identify the `Repository Upload Token` and copy it.
 
 4. Add this to your repo on Travis CI dashboard. In the project's Travis page, click `More Options` then `Settings`.
    Add the token to the `Environment Variables` section.
@@ -187,8 +202,11 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
    to try `Trigger Build` and test the CI pipeline.
 
 6. Now replace the Travis and CodeCov badges in README.md.
-   For Travis, if you click on the `build: ....` black and green badge on your repo page on Travis, you will get option to
-   copy the status image.
-   For Codecov, [follow these instructions](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md)
+   For Travis, if you click on the `build: ....` black and green badge next to your repo page on Travis, you will get option to
+   copy the status image (in the `Result` box). Head over to your `README.md` file in your project repo, and modify the existing Travis badge to be yours instead.
+
+   ![](travis-badge.png)
+
+   For Codecov, [follow these instructions](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md) to find your badge, and replace the existing badge in `README.md` just as you did for Travis.
 
 Next, let's set up [Pivotal Tracker](./tool_setup.md).
