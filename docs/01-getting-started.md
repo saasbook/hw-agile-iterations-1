@@ -1,3 +1,59 @@
+# Overview and Learning Goals
+
+This assignment is designed to take you through the entire Agile
+lifecycle of adding enhanced functionality to an existing (legacy) app.
+It pulls together ideas and techniques from multiple parts of the 
+[ESaaS](http://www.saasbook.info) materials, including:
+
+* approaching and understanding a legacy codebase to identify
+changepoints (Chapter 9)
+* developing stories using BDD, prioritizing and assigning points,
+tracking story delivery (Chapter 7)
+* using branch-per-feature and pull-request-based code reviews
+(Chapter 10)
+* working with client-side JavaScript code (Chapter 6) as well as
+Rails (Chapters 4, 5)
+* creating tests for your code (Chapter 8)
+
+The setup for the ActionMap app is more complex than the simple apps we've been
+working with so far, and is more representative of a real production
+app in several ways:
+
+1. ActionMap uses quite a bit of JavaScript, so we will use Webpack to
+manage the JavaScript assets, just as Bundler manages Ruby on Rails
+assets.  Webpack is a sophisticated JavaScript library manager that
+relies on Node.js, `npm` (the Node package manager), and other tools
+that we will install.
+
+2. The app makes use of the Google Civic Info API, for which you will
+have to sign up for a (free) developer API key.  Since these keys are
+sensitive you will have to securely manage how to hold on to this
+data, how to get the keys into the app's production (deployment)
+environment, and how to keep them in sync between production and each
+team member's development environment.
+
+In terms of the development process:
+
+1. You will use Travis CI to run continuous integration as you
+develop, and CodeCov (test coverage as a service) to measure your test
+coverage each time you push changes.
+
+2. You will use various linters--programs that check your code for
+code smells, bad habits, and so on--that will run constantly each time
+you push changes.
+
+3. You will not only use Pivotal Tracker to track user stories
+(features) for the app, but also enable an integration with GitHub in
+order to use branch-per-feature development methodology. Specifically,
+when this integration is activated, a GitHub branch can
+semi-automatically remain "in sync" with the Pivotal Tracker story
+that the branch implements.
+
+    
+
+
+
+
 ## How to setup your local development environment
 ### 1. Install Ruby
 You need to install Ruby. We recommend you use [rvm](https://rvm.io/) but you could also use [rbenv](https://github.com/rbenv/rbenv) to manage Ruby version.
