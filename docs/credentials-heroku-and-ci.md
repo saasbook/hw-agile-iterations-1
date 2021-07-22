@@ -1,52 +1,55 @@
 ### Credentials Management
-In past version of `rails`, credentials management has been done in a variety of ways.
-There are gems that were used to push credentials and environment variables across environment (eg from localhost to heroku).
-In this projects, we will be using built-in `config/credentials.yml.enc` in Rails 5.2. If you are working with legacy applications,
-you may encounter `Figaro`, a popular gem that is used to manage credentials.
-Note, for all the following commands, make sure to `cd` into the `path/to/your/rails/app`.
 
-1. The first step to set up your own encrypted credentials is to delete the current `config/credentials.yml.enc`
-    ```shell script
-    rm -rf config/credentials.yml.enc
-    ```
+To manage credentials like API keys securely, we will be using Rails
+5's built-in `config/credentials.yml.enc`.
 
-2. Then we need to regenerate a new `config/master.key` and `config/credentials.yml.enc`.
-    ```shell script
-    EDITOR=vim rails credentials:edit
-    ```
-    Save and [exit vim](https://www.google.com/search?q=how+to+save+and+exit+vim).
+Delete that existing file.  We will now generate a master key and
+a new credentials file encrypted under that key:
 
-3. Do not edit the `credentials.yml.enc` for now but you will later add Google Oauth, Google Civic API and Github Oauth keys.
-   Just take not of the values in the file. It should look like this:
-   ```yaml
-   .
-   .
-   .
-   secret_key_base: some-long-string
-   ```
-4. Open a rails console with `bundle exec rails c`. Inside the console, you should be able to run the following command
-   and see the secret_key_base from the file.
-   ```ruby
-   Rails.application.credentials[:secret_key_base]
-   ```
-   Rails.application.credentials.dig reads the given key eg 'GOOGLE_CLIENT_ID' from
-   `config/credentials.yml.enc` by decrypting it with `config/master.key`.
-   You could specify environment specific groups as follows in config/credentials.yml.enc:
-   ```yaml
-       production:
-           GOOGLE_CLIENT_ID: xxxx
-           GOOGLE_CLIENT_SECRET: xxx
+```shell script
+EDITOR=vim rails credentials:edit
+```
 
-       development:
-           GOOGLE_CLIENT_ID: xxx
-           GOOGLE_CLIENT_SECRET: xxx
-   ```
+(You can replace `vim` with your own favorite editor.)
+Save and [exit vim](https://www.google.com/search?q=how+to+save+and+exit+vim).
 
-   Then use the following syntax to read keys for specific environment:
-   ```ruby
-   Rails.application.credentials.dig(:production, :GOOGLE_CLIENT_ID)
-   Rails.application.credentials.dig(:development, :GOOGLE_CLIENT_ID)
-   ```
+Later we will add keys in this file for Google Oauth, Google Civic API and GitHub Oauth.
+For now, just take note of the values in the file. It should look something like this:
+```yaml
+.
+.
+secret_key_base: some-long-string
+```
+
+Rails apps can read keys from `credentials.yml.enc` by using 
+`Rails.application.credentials.dig`.  This method uses the info in
+`config/master.key` to temporarily decrypt the credentials file and
+read the desired key(s), if they exist.  Similar to a Gemfile, the
+credentials file can contain keys that are specific to particular
+environments (`production`, `development`, etc.) as well as keys
+common across all environments.
+
+So, for example, given the following (unencrypted) credentials file:
+
+```yaml
+    secret_key_base: some-long-string
+    production:
+        GOOGLE_CLIENT_ID: prod_id
+        GOOGLE_CLIENT_SECRET: prod_secret
+
+    development:
+        GOOGLE_CLIENT_ID: dev_id
+        GOOGLE_CLIENT_SECRET: dev_secret
+```
+
+Then `Rails.application.credentials.dig(:production,'GOOGLE_CLIENT_ID')` would return `"prod_id"`, and
+`Rails.application.credentials.dig(:development,'secret_key_base')` would return `"some-long-string"`.
+
+You can also open a rails console and examine individual keys 
+with `Rails.application.credentials['GOOGLE_CLIENT_ID']`
+ (remember that the environment will be whatever the value of
+`RAILS_ENV` was when the console was started).
+
 
 ### Heroku
 Now we would like to setup the app on Heroku ensuring that our credentials are available there.

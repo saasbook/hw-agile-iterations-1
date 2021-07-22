@@ -10,42 +10,37 @@ You may have noticed that most of our HTML in [app/views](../app/views) is rende
 that is, you can find HAML engines in more programming languages including Java, Javascript and PHP. This makes it easy for most developers to work with the codebase.
 
 
-To enforce coding standards within this project, we have setup three different linter systems: [rubocop](https://github.com/rubocop-hq/rubocop), [haml-lint](https://github.com/sds/haml-lint) and [eslint](https://eslint.org/)
-for Ruby files, HAML files and Javascript files respectively. In additions, you will notice there are configuration files [.rubocop.yml](../.rubocop.yml), [.haml-lint.yml](../.haml-lint.yml) and [.eslintrc.js](../.eslintrc.js) 
-that list our codified standards for each linter system.
+To enforce coding standards within this project, we have setup three
+different linter systems that enforce this project's formatting
+standards.  We have included tests that will enforce the linter checks
+in [spec/linters](../spec/linters) that are run automatically on CI.
 
 
-Run the following command to run rubocop lint checks:
-```shell script
-bundle exec rubocop
-```
+[rubocop](https://github.com/rubocop-hq/rubocop) checks your
+Ruby code and relies on [.rubocop.yml](../.rubocop.yml) for configuration.
+You can manually do this checks with `bundle exec rubocop`; add `-a` to autocorrect some
+common errors (but as always, commit before you do so!).
 
-Run the following command to auto-correct some common rubocop lint errors:
-```shell script
-bundle exec rubocop -a
-```
+[haml-lint](https://github.com/sds/haml-lint), configured by
+[.haml-lint.yml](../.haml-lint.yml), works on Haml files.
+`bundle exec haml-lint` runs it manually.
 
-Run the following command to execute haml-lint checks:
-```shell script
-bundle exec haml-lint
-```
-Unfortunately, haml-lint does not yet have auto-correct functionality as of this writing.
-See the following open github issue: [Autocorrect feature](https://github.com/sds/haml-lint/issues/217) issue.
-
-Run the following command to execute eslint checks:
-```shell script
-yarn run lint_fix
-```
-
-Notice that we run eslint using `yarn run` command. If you check [package.json](../package.json), 
-you will notice that `lint` and `lint_fix` are entries in JSON path `$.scripts.lint` and `$.scripts.lint_fix` that invoke a vendored install of eslint.
-
-We have included tests that will enforce the linter checks in [spec/linters](../spec/linters).
+Finally,
+[eslint](https://eslint.org/), configured by
+[.eslintrc.js](../.eslintrc.js), works on JavaScript.
+`yarn run lint_fix` runs it manually.  (You can see in
+[package.json](../package.json) that `lint` and `lint_fix` are entries
+in JSON path `$.scripts.lint` and `$.scripts.lint_fix` that invoke a
+vendored install of `eslint`.) 
 
 
-Sometimes, you may just want to have a file watcher that runs linter check and tests as you work on the project.
+**Tip:**
 [Guard](https://github.com/guard/guard) is a tool that allows you to run file watchers that run automated tasks whenever a file or directory is modified.
-The [Guardfile](../Guardfile) specifies file watchers and tasks to run. To initiate guard, run the following command in a separate terminal:
+The [Guardfile](../Guardfile) specifies file watchers and tasks to
+run. 
+One option is to setup Guard to run the linters every time you modify
+a file.
+To initiate guard, run the following command in a separate terminal:
 ```shell script
 bundle exec guard
 ```
