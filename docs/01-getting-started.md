@@ -54,7 +54,7 @@ that the branch implements.
 
 
 
-## How to setup your local development environment
+## How to set up your local development environment
 ### 1. Install Ruby
 You need to install Ruby. We recommend you use [rvm](https://rvm.io/) but you could also use [rbenv](https://github.com/rbenv/rbenv) to manage Ruby version.
 These are environment management tools that help you switch between Ruby version easily across different projects.
@@ -74,10 +74,10 @@ source ~/.bashrc
 
 For example, if you are using rvm run the following commands.
 ```shell script
-rvm install 2.5.6
-rvm use 2.5.6
+rvm install 2.6.5
+rvm use 2.6.5
 ```
-Remember to replace the version 2.5.6 with the ruby version in .ruby-version file linked above.
+Remember to replace 2.6.5 with the Ruby version in the Gemfile if it does not match.
 
 ### 2. Install Node
 Similarly, you need to install Node and we would recommend that you use [nvm](https://github.com/nvm-sh/nvm) which allows you to manage multiple active Node.js versions.
@@ -89,7 +89,7 @@ nvm install 12.13.1
 ```
 
 ### 3. Install Yarn
-Once Node is installed, you need to install yarn. Node has two popular javascript package managers: [npm](https://github.com/npm/cli) and [yarn](https://github.com/yarnpkg/yarn).
+Once Node is installed, you need to install yarn. Node has two popular JavaScript package managers: [npm](https://github.com/npm/cli) and [yarn](https://github.com/yarnpkg/yarn).
 In this project, we will use yarn as it is the default for [Rails Webpacker](https://github.com/rails/webpacker).
 The specific version of yarn you need to install is listed in [package.json](../package.json) under the JSON path `$.engines.yarn`.
 
@@ -104,15 +104,21 @@ yarn -v
 ```
 
 ### 4. Install project dependencies
-There are two sets of dependencies that you need to install: ruby dependencies and node dependencies.
-First, to install ruby dependencies. [RubyGems](https://rubygems.org/) is a dependency management systems that allows developers to share and distribute code.
-We recommend you install your ruby dependencies within the project's `vendor/bundle` folder instead globally within you ruby installation.
+There are two sets of dependencies that you need to install: Ruby dependencies and Node dependencies.
+First, the Ruby dependencies. [RubyGems](https://rubygems.org/) is a dependency management system that allows developers to share and distribute code, and we will use Bundler to download those dependencies.
+
+If you haven't done so already, be sure install Bundler!
+```shell script
+gem install bundler
+```
+
+We recommend you install your Ruby dependencies within the project's `vendor/bundle` folder instead of installing gems globally within your Ruby installation.
 To do this, run the following command:
 ```shell script
 bundle config set path vendor/bundle 
 ```
 
-The command above would imply that you will be required to run all ruby commands with the `bundle exec` prefix.
+The command above would imply that you will be required to run all Ruby commands with the `bundle exec` prefix.
 For example, to run a migration (which we will do shortly), you must execute the command `bundle exec rails db:migrate` instead of `rails db:migrate`.
 Some may find this tedious, hence we suggest an option to alias the `bundle exec` prefix. 
 You could run `alias be="bundle exec"` on your terminal which will allow you to run `be rails db:migrate` instead of the more verbose `bundle exec rails db:migrate`.
@@ -134,15 +140,15 @@ It may take a while since some of the dependencies are Ruby extensions written i
 bundle install
 ```
 
-After all the gems are installed, we now need to install the javascript requirements.
-Node projects have a package.json file that serves the same purpose as Gemfile, but for Javascript dependencies. It lists all project dependencies.
+After all the gems are installed, we now need to install the JavaScript dependencies.
+Node projects have a [package.json](../package.json) file that serves the same purpose as the Gemfile, but for JavaScript: listing all of the project's dependencies.
 [yarn.lock](../yarn.lock) and `package-lock.json` serve the same role as `Gemfile.lock`, they pin dependencies. 
 Yarn uses `yarn.lock` whereas npm uses `package-lock.json`. This project uses `yarn.lock` since it uses yarn.
 Projects that use npm have `package-lock.json` instead. It is highly advised that you only have one of these and not both
 in your project since they may diverge and lead to inconsistent environments for different developers. 
 You will notice that `package-lock.json` is git-ignored in [.gitignore](../.gitignore).
 
-To install javascript requirements, we will ran the following command:
+To install JavaScript requirements, run the following command:
 ```shell script
 yarn install
 ```
@@ -168,19 +174,26 @@ There are two ways to do this. The first option is that you could launch the app
 bundle exec rails s
 ```
 
-However, this option has one major downside. It takes long for any changes that you make to reflect on the browser since 
-you will not have live reload.
+However, this option has one major downside. It takes a long time for any changes that you make to the JavaScript to reflect on the browser since you will not have live reload.
 
 The second option, is to have two terminals. In one terminal, run the following command:
 ```shell script
-bin/webpacker-dev-server
+bin/webpack-dev-server
 ``` 
 
-This will launch a `webpacker` instance that live reloads your browser as you edit the javascript code or CSS styles and makes the development process much faster.
+This will launch a `webpacker` instance that live reloads your browser as you edit the JavaScript code or CSS styles and makes the development process much faster.
 
-After launching `webpacker-dev-server` on one terminal, switch to the second terminal window and launch a rails server.
+After launching `webpacker-dev-server` on one terminal, switch to the second terminal window and launch a Rails server.
 ```shell script
 bundle exec rails s
+```
+
+If you find it cumbersome to need to keep two terminal windows open, take a look at [Overmind](https://github.com/DarthSim/overmind) and how to make a [Procfile](https://devcenter.heroku.com/articles/procfile) which will run both the `webpacker` instance and Rails server at the same time.
+
+An example Procfile might look like
+```
+web: bundle exec rails s
+webpacker: bin/webpacker-dev-server
 ```
 
 Next, you should read about [linters](./linters.md).
