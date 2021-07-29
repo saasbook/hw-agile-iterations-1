@@ -45,8 +45,8 @@ So, for example, given the following (unencrypted) credentials file:
 Then `Rails.application.credentials.dig(:production,'GOOGLE_CLIENT_ID')` would return `"prod_id"`, and
 `Rails.application.credentials.dig(:development,'secret_key_base')` would return `"some-long-string"`.
 
-You can also open a rails console and examine individual keys 
-with `Rails.application.credentials['GOOGLE_CLIENT_ID']`
+You can also open a `rails console` and examine individual keys
+ with `Rails.application.credentials['GOOGLE_CLIENT_ID']`
  (remember that the environment will be whatever the value of
 `RAILS_ENV` was when the console was started).
 
