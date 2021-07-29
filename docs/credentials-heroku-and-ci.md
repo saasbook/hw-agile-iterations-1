@@ -56,10 +56,10 @@ Now we would like to setup the app on Heroku ensuring that our credentials are a
 1. Install Heroku CLI client on your machine [using the following instructions](https://devcenter.heroku.com/articles/heroku-cli).
 2. Make sure your installation works by running the following command `heroku -v` to print the version of Heroku CLI
    available on your terminal.
-3. Create a new heroku app using `heroku create`. You may provide your desired appname using `heroku create fancyapp`.
+3. Create a new Heroku app using `heroku create`. You may provide your desired appname using `heroku create fancyapp`.
    This will allow you to access your app on `fancyapp.herokuapp.com`.
    Note that if you choose to provide a name, it must be **universally unique**, or creation will fail.
-4. You need to add nodejs `buildpack` to your heroku app for it to work. Do so using:
+4. You need to add the Ruby and Node.js `buildpack`s to your heroku app for it to work. Do so using:
    ```shell script
    heroku buildpacks:add heroku/nodejs
    heroku buildpacks:add heroku/ruby
@@ -68,7 +68,7 @@ Now we would like to setup the app on Heroku ensuring that our credentials are a
    ```shell script
    heroku buildpacks
    ```
-   You should see both ruby and nodejs in the output.
+   You should see both Ruby and Node.js in the output.
 5. Next you need to enable `PostgreSQL` on heroku for your app. Run the following command:
    ```shell script
    heroku run rails db:migrate

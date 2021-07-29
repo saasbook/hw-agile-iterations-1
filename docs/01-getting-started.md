@@ -61,7 +61,7 @@ These are environment management tools that help you switch between Ruby version
 Once you install one of these tools, you need to install the Ruby version listed in [Gemfile](../Gemfile).
 
 After installing rvm or rbenv, you need to check that it is loaded in you current terminal.
-You can do so by checking the version of your specific ruby env manager. 
+You can do so by checking the version of your specific Ruby env manager.
 For example if you opt for rvm:
 ```shell script
 rvm -v
@@ -81,7 +81,7 @@ Remember to replace 2.6.5 with the Ruby version in the Gemfile if it does not ma
 
 ### 2. Install Node
 Similarly, you need to install Node and we would recommend that you use [nvm](https://github.com/nvm-sh/nvm) which allows you to manage multiple active Node.js versions.
-The specific version of node you need to install is listed in [package.json](../package.json) under the [JSON path](https://github.com/json-path/JsonPath) `$.engines.node`.
+The specific version of Node.js you need to install is listed in [package.json](../package.json) under the [JSON path](https://github.com/json-path/JsonPath) `$.engines.node`.
 
 Example use of nvm to install node version `12.13.1`:
 ```shell script
