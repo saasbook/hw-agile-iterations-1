@@ -7,7 +7,7 @@ Delete that existing file.  We will now generate a master key and
 a new credentials file encrypted under that key:
 
 ```shell script
-EDITOR=vim rails credentials:edit
+EDITOR=vim bundle exec rails credentials:edit
 ```
 
 (You can replace `vim` with your own favorite editor.)
