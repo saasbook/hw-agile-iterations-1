@@ -57,7 +57,8 @@ Now we would like to setup the app on Heroku ensuring that our credentials are a
 2. Make sure your installation works by running the following command `heroku -v` to print the version of Heroku CLI
    available on your terminal.
 3. Create a new heroku app using `heroku create`. You may provide your desired appname using `heroku create fancyapp`.
-   This will allow you to access your app on `fancyapp.herokuapp.com`
+   This will allow you to access your app on `fancyapp.herokuapp.com`.
+   Note that if you choose to provide a name, it must be **universally unique**, or creation will fail.
 4. You need to add nodejs `buildpack` to your heroku app for it to work. Do so using:
    ```shell script
    heroku buildpacks:add heroku/nodejs
