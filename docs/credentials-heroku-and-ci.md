@@ -137,13 +137,13 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
 
 ### Travis CI
 1. Make sure you have an account with [travis-ci.com](https://travis-ci.com).
-   Create the account with the Github account that you
-   use for Github Classroom.
+   Create the account with the GitHub account that you
+   use for GitHub Classroom.
 2. Install Travis CI CLI client on your terminal using the following command:
    ```shell script
    gem install travis
    ```
-3. Login into Travis CI using your Github Credentials on the terminal:
+3. Login into Travis CI using your GitHub Credentials on the terminal:
    ```shell script
    travis login --pro --auto
    ```
@@ -160,6 +160,8 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
    ```shell script
    travis sshkey --generate -r [myorg]/[myrepo]
    ```
+   Please note that as of time of writing, the above will ask you to log in again if you use 2FA on GitHub (as you probably should...), but even inputting the right credentials will still fail. (See [this GitHub issue](https://github.com/travis-ci/travis.rb/issues/413))
+   Annoyingly, uploading your own SSH key via Travis CLI will fail if your SSH key does not have a passphrase (as per [another GitHub issue](https://github.com/travis-ci/travis.rb/issues/267)), so you will have to manually [generate your own SSH key](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) and either ensure it has a passphrase and [upload it via the CLI](https://github.com/travis-ci/travis.rb#sshkey), or [upload it manually](https://docs.travis-ci.com/user/private-dependencies/#using-an-existing-key).
 4. Now push your `config/master.key` to Travis CI using:
    ```shell script
    travis encrypt --pro RAILS_MASTER_KEY=`cat config/master.key` --add env
@@ -170,18 +172,18 @@ While you're waiting, you can see if your app is [responsive](https://www.w3scho
    ```
 
 ### Codecov
-1. Head to [codecov.io](https://codecov.io) and Click `Student` then `Sign In with Github`.
-   Identify your Github Classroom project and add the repository to Codecov.
+1. You'll need to claim your [GitHub Student Developer Pack](https://education.github.com/pack) before beginning.
+1. Head to [codecov.io](https://codecov.io) and `Sign In with GitHub`.
+   Identify your GitHub Classroom project and add the repository to Codecov.
 
-2. You may be required to add permissions to Codecov on Github. Visit the settings page on
-   Github and select `Applications`. Look for Codecov and grant extra permission if so required.
+2. You may be required to add permissions to Codecov on GitHub. Visit your [GitHub settings page](https://github.com/settings) and select `Applications`. Look for Codecov and grant extra permission if needed.
 
 3. Visit your repo on Codecov via `codecov.io/gh/[myorg]/[myrepo]/settings`.
    Identify the `Repository Upload Token` and copy the `CODECOV_TOKEN="your-codecov-upload-token"`.
 
 4. Add this to your repo on Travis CI dashboard. In the project's Travis page, click `More Options` then `Settings`.
    Add the token to the `Environment Variables` section.
-5. Add and commit your changes locally then push to Github. Head to [travis-ci.com](https://travis-ci.com)
+5. Add and commit your changes locally then push to GitHub. Head to [travis-ci.com](https://travis-ci.com)
    to try `Trigger Build` and test the CI pipeline.
 
 6. Now replace the Travis and CodeCov badges in README.md.
