@@ -4,11 +4,11 @@
 
 For this project, you'll be using Pivotal Tracker to track user stories, estimate story points, etc. First, all team members should create Pivotal Tracker accounts (which is free); then _one_ member creates a new project, and add your teammates as owners.
 
-Your Pivotal Tracker project should be titled **Actionmap-Su20-GroupXX**, with the **XX** filled in with your group number (found on the team assignment spreadsheet).
+Your Pivotal Tracker project should be titled **Actionmap-Su21-GroupXX**, with the **XX** filled in with your group number (found on the team assignment spreadsheet).
 
 Configure your Pivotal Tracker project settings as follows:
  * Start Iterations On: Friday
- * Project Start Date: 2020-11-09
+ * Project Start Date: 2021-07-30
  * Iteration Length: 2 weeks
  * Point Scale: Power of 2 (0, 1, 2, 4, 8)
  * Initial Velocity: 10
@@ -26,7 +26,7 @@ For example, if your story ID is `123123`, any branch you create that relates to
 
 ### 2. Add Auditor Accounts
 
-- Add *srujayk* and *governifyauditor* as **Owners** of your Pivotal Tracker project.
-- Add *srujay@berkeley.edu* and *governify.auditor@gmail.com* as **Owners** of your Heroku project.
+- Under the Members tab of your Pivotal Tracker project, add *cobyzhong* and *governifyauditor* as **Owners**.
+- Under the Access tab in your Heroku project, add *coby.zhong@berkeley.edu* and *governify.auditor@gmail.com* as **Collaborators**.
 
 Next, explore and [understand the codebase](./understanding-the-code.md).
