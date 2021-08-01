@@ -8,7 +8,7 @@ Your Pivotal Tracker project should be titled **Actionmap-Su21-GroupXX**, with t
 
 Configure your Pivotal Tracker project settings as follows:
  * Start Iterations On: Friday
- * Project Start Date: 2021-07-30
+ * Project Start Date: 2021-08-04
  * Iteration Length: 2 weeks
  * Point Scale: Power of 2 (0, 1, 2, 4, 8)
  * Initial Velocity: 10
